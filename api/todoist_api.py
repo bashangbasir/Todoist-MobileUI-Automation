@@ -67,10 +67,14 @@ class TodoistAPI:
     
         
 
-if __name__ == "__main__":
-    API = TodoistAPI()
-    print(API.auth_token,API.base_url)
-    # response = API.create_project("Bassam Routines")
-    # print(response.status_code,response.json())
-    response = API.get_projects()
-    print(response.status_code,response.json())
+# if __name__ == "__main__":
+#     API = TodoistAPI()
+#     #print(API.auth_token,API.base_url)
+#     try:
+#         response = API.create_project("Bassam cccc")
+#         print(response.status_code,response.text)
+#         print(type(response.status_code),response.status_code)
+#     except Exception as e:
+#         print(e)
+#     response = API.get_projects()
+#     # print(response.status_code,response.json())
