@@ -39,18 +39,15 @@ class TodoistAPI:
         })
         return response
 
-    def create_task(self,content,project_id):
+    def get_active_tasks(self,project_id):
         
-        url = self.base_url+ "/tasks"
-        response = requests.post(
+        url = self.base_url + "/tasks"
+        response = requests.get(
             url,
-            data=json.dumps({
-                "content": content,
+            params={
                 "project_id": project_id
-            }),
+            },
             headers={
-                "Content-Type": "application/json",
-                "X-Request-Id": str(uuid.uuid4()),
                 "Authorization": self.auth_token
         })
 
@@ -64,17 +61,26 @@ class TodoistAPI:
                 "Authorization": "Bearer " + self.auth_token
         })
         return response
-    
+
+    def save_response(self,response,file_name):
+        with open(file_name, "w") as f:
+            f.write(response.text)
+
+    def load_save_data(self,file_name):
+        with open(file_name, "r") as f:
+            load_data = json.load(f)
+        return load_data
         
 
 # if __name__ == "__main__":
 #     API = TodoistAPI()
 #     #print(API.auth_token,API.base_url)
 #     try:
-#         response = API.create_project("Bassam cccc")
-#         print(response.status_code,response.text)
-#         print(type(response.status_code),response.status_code)
+#         response = API.get_projects()
+#         print(response.status_code)
+#         print(type(response.text))
+#         print(response.text)
+#         API.save_response(response,"all_project.json")
+#         print(type(API.load_save_data("response.json")))
 #     except Exception as e:
 #         print(e)
-#     response = API.get_projects()
-#     # print(response.status_code,response.json())
