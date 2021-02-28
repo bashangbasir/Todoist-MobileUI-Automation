@@ -13,7 +13,7 @@ def driver():
         platformName='Android',
         #platformVersion='9',
         avd = "AppiumR",
-        automationName='uiautomator2',
+        automationName='UiAUtomator2',
         deviceName='emulator-5556',
         appPackage= "com.todoist",
         appActivity= "com.todoist.activity.HomeActivity"
