@@ -14,7 +14,14 @@ python -m pipenv install
 ```bash
 python -m pipenv shell
 ```
-3. Run test 
+3. Create api_config.json in project directory
+```bash
+{
+    "token" = "your token"
+    "base_url": "https://api.todoist.com/rest/v1"
+{
+```
+4. Run test 
 ```bash
 python -m pytest
 ```
