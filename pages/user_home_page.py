@@ -4,6 +4,10 @@ This module contain the page object for the user home page.
 
 from appium.webdriver.common.mobileby import MobileBy 
 import time
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from appium.webdriver.common.touch_action import TouchAction
+
 
 class UserHomePage:
     
@@ -14,9 +18,6 @@ class UserHomePage:
     CREATE_TASK_BTN = (MobileBy.ID,"com.todoist:id/fab")
     TASK_CONTENT_TEXTBOX = (MobileBy.ID,"android:id/message")
     ADD_TASK_BTN = (MobileBy.ACCESSIBILITY_ID,"Add")
-    TASKS_LISTS = (MobileBy.ID,"com.todoist:id/root")
-    TASK_TEXT = (MobileBy.XPATH)
-
 
     def __init__(self,driver):
         self.driver = driver
@@ -36,13 +37,11 @@ class UserHomePage:
         return all_projects
 
     def go_to_project(self,project_name):
-        xpath_project = "*//android.widget.RelativeLayout/android.widget.TextView[@text='{}'".format(project_name)
+        xpath_project = f"//android.widget.RelativeLayout//android.widget.TextView[@text='{project_name}']"
         self.driver.find_element(*self.BURGER_NAV).click()
         self.driver.find_element(*self.PROJECTS_BTN).click()
-        project_elems = self.driver.find_elements(*self.ALL_PROJECT_LISTS)
-        for elem in project_elems:
-            if project_name == elem.find_element(*self.PROJECT_TEXT).text:
-                elem.find_element(*self.PROJECT_TEXT).click()
+        self.driver.find_element(MobileBy.XPATH,xpath_project).click()
+        #project_elems = self.driver.find_elements(*self.ALL_PROJECT_LISTS)
 
         
 
@@ -54,6 +53,20 @@ class UserHomePage:
         
         #self.driver.press_keycode(4)
 
+    def complete_task(self,task_name):
+        self.driver.find_element(MobileBy.XPATH, f"//android.widget.TextView[@text='{task_name}']").click()
+        self.driver.find_element_by_id("com.todoist:id/item_checkmark").click()
+        WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((MobileBy.ID, "com.todoist:id/snackbar_text")))
+        return self.driver.find_element_by_id("com.todoist:id/snackbar_text").text
+
+
+    def refresh_page_by_swipe(self):
+        TouchAction(self.driver).press(x=515, y=1200).move_to(x=515, y=1600).release().perform()
+        
+
+    def get_task(self,task_name):
+        return self.driver.find_element(MobileBy.XPATH, f"//android.widget.TextView[@text='{task_name}']").text
+        
 
 
 
