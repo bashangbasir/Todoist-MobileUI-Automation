@@ -25,7 +25,7 @@ class TodoistAPI:
             headers={
                 "Content-Type": "application/json",
                 "X-Request-Id": str(uuid.uuid4()),
-                "Authorization": self.auth_token
+                "Authorization": f"Bearer {self.auth_token}"
         })
         
         return response
@@ -35,7 +35,7 @@ class TodoistAPI:
         response = requests.get(
             url,
             headers={
-                "Authorization": self.auth_token
+                "Authorization": f"Bearer {self.auth_token}"
         })
         return response
 
@@ -48,17 +48,17 @@ class TodoistAPI:
                 "project_id": project_id
             },
             headers={
-                "Authorization": self.auth_token
+                "Authorization": f"Bearer {self.auth_token}"
         })
 
         return response
 
     def reopen_task(self,task_id):
-        url = self.base_url + "/tasks" + task_id +"/reopen"
+        url = self.base_url + "/tasks/"+str(task_id)+"/reopen"
         response = requests.post( 
             url, 
             headers={
-                "Authorization": "Bearer " + self.auth_token
+                "Authorization": f"Bearer {self.auth_token}"
         })
         return response
 
@@ -76,11 +76,6 @@ class TodoistAPI:
 #     API = TodoistAPI()
 #     #print(API.auth_token,API.base_url)
 #     try:
-#         response = API.get_projects()
-#         print(response.status_code)
-#         print(type(response.text))
-#         print(response.text)
-#         API.save_response(response,"all_project.json")
-#         print(type(API.load_save_data("response.json")))
+#         r1 = API.reopen_task(4616307296)    
 #     except Exception as e:
 #         print(e)
