@@ -64,8 +64,7 @@ def test_create_task_via_mobile_app(driver):
     assert project_name in user_home_page.get_toolbar_title(project_name), "Wrong project"
     task_name = "TASK CREATE"
     user_home_page.create_task(task_name)
-    print(project_id)
-   
+    
     #2. API: Verify that task created correctly.
     time.sleep(3)
     r = todoist_api.get_active_tasks(project_id)
@@ -75,9 +74,43 @@ def test_create_task_via_mobile_app(driver):
     assert r.json()[0]["content"] == task_name , "Task is not created"
     
     #raise Exception("Test Incomplete!")
-    
 
 def test_reopen_task(driver):
-    #TODO
-    raise Exception("Test Incomplete!")
-    pass
+    todoist_api = TodoistAPI()
+    #read the saved reponse previous test
+    data = todoist_api.load_save_data("project.json")
+    project_name = data["name"]
+    project_id = data["id"]
+
+    welcome_page = WelcomePage(driver)
+    assert "Welcome to Todoist" in welcome_page.get_welcome_message(),"Wrong Welcome title"
+    welcome_page.start_login_with_email()
+    login_page = LoginPage(driver)
+    login_page.login()
+    user_home_page = UserHomePage(driver)
+    assert "Today" in user_home_page.get_toolbar_title("Today") , "Wrong toolbar title"
+    #2. Open test project
+    user_home_page.go_to_project(project_name)
+    assert project_name in user_home_page.get_toolbar_title(project_name), "Wrong project"
+    #3. Created test task
+    task_name = "TASK CREATE 2"
+    user_home_page.create_task(task_name)
+    time.sleep(5)
+    r = todoist_api.get_active_tasks(project_id)
+    task_id = r.json()[-1]["id"]
+    #todoist_api.save_response(r,"task.json")
+    #4. Complete test task.
+    user_home_page.complete_task(task_name)
+    #5. Reopen test task via API.
+    #tasks = todoist_api.load_save_data("task.json")
+    #task_id = tasks[-1]["id"]
+    time.sleep(3)
+    r = todoist_api.reopen_task(task_id)
+    time.sleep(3)
+    assert r.status_code == 204 , "Failed reopen completed task."
+    #6. Verify task is reopen on mobile
+    user_home_page.refresh_page_by_swipe()
+    assert user_home_page.get_task(task_name) == task_name , "Reopen task failed."
+
+    #raise Exception("Test Incomplete!")
+
