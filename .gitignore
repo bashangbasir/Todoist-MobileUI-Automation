@@ -3,3 +3,4 @@ test.py
 tests/test_setup.py
 response.json
 all_project.json
+TestReport.html
