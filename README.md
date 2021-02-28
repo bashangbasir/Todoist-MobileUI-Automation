@@ -18,8 +18,9 @@ python -m pipenv shell
 ```bash
 python -m pytest
 ```
+### Sample Result
+![alt-text](https://github.com/bashangbasir/Setel-MobileAutomation/blob/master/result.gif)
 
-![alt-text](link)
 
 ### Notes
-- Place the webdriver in ./resources folder
+- Start the test on empty project Todoist App 
