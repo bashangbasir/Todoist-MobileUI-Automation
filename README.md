@@ -2,7 +2,8 @@
 ## Setel Mobile Automatio Task 
 
 ### Installation 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install pipenv
+
+Clone this repo and use the package manager [pip](https://pip.pypa.io/en/stable/) to install pipenv
 ```bash
 pip install pipenv
 ```
