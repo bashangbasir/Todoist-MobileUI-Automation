@@ -1,5 +1,5 @@
 # Setel-MobileAutomation
-## Setel Mobile Automatio Task 
+## Setel Mobile Automation Task 
 
 ### Installation 
 
