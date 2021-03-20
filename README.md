@@ -1,5 +1,5 @@
-# Setel-MobileAutomation
-## Setel Mobile Automation Task 
+# MobileAutomation
+## Todoist Mobile Automation 
 
 ### Installation 
 
